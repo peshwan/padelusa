@@ -21,14 +21,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2">
-              <li><Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">How to Play</Link></li>
-              <li><Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">Padel Rules</Link></li>
-              <li><Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">Equipment Guide</Link></li>
-            </ul>
-          </div>
+          
 
           <div>
             <h4 className="font-semibold mb-4">Connect</h4>
