@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -12,22 +11,17 @@ import NewsCard from '@/components/news/NewsCard';
 import { courts } from '@/data/courts';
 import { coaches } from '@/data/coaches';
 import { news } from '@/data/news';
-
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
-
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, this would navigate to search results
     console.log('Search query:', searchQuery);
   };
-
   const featuredCourts = courts.slice(0, 3);
   const featuredCoaches = coaches.slice(0, 3);
   const latestNews = news.slice(0, 3);
-
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-padel-blue to-padel-green py-16 md:py-24 text-white">
         <div className="container relative z-10">
@@ -35,20 +29,12 @@ const Index = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               Find Padel Courts Across the USA
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-white/90">
-              Discover the best padel courts, coaches, and communities near you
-            </p>
+            <p className="text-lg md:text-xl mb-8 text-white/90">Discover the best padel courts, near you</p>
             
             <form onSubmit={handleSearchSubmit} className="flex max-w-md mx-auto gap-2">
               <div className="relative flex-grow">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                <Input 
-                  type="text"
-                  placeholder="Search for courts by location..." 
-                  className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60 w-full"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+                <Input type="text" placeholder="Search for courts by location..." className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60 w-full" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
               </div>
               <Button type="submit" className="bg-white text-padel-blue hover:bg-white/90">
                 Search
@@ -78,18 +64,13 @@ const Index = () => {
       <section className="py-16">
         <div className="container">
           <div className="flex items-center justify-between mb-6">
-            <SectionHeader 
-              title="Featured Courts" 
-              description="Discover top-rated padel courts across the USA"
-            />
+            <SectionHeader title="Featured Courts" description="Discover top-rated padel courts across the USA" />
             <Link to="/courts" className="text-padel-blue hover:underline">
               View All
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredCourts.map(court => (
-              <CourtCard key={court.id} court={court} />
-            ))}
+            {featuredCourts.map(court => <CourtCard key={court.id} court={court} />)}
           </div>
         </div>
       </section>
@@ -97,11 +78,7 @@ const Index = () => {
       {/* Why Padel */}
       <section className="py-16 bg-padel-gray">
         <div className="container">
-          <SectionHeader 
-            title="Why Play Padel?" 
-            description="Discover what makes padel one of the fastest growing sports in the world"
-            centered
-          />
+          <SectionHeader title="Why Play Padel?" description="Discover what makes padel one of the fastest growing sports in the world" centered />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             <div className="bg-white p-6 rounded-lg shadow-sm text-center">
               <div className="w-16 h-16 bg-padel-blue/10 text-padel-blue rounded-full flex items-center justify-center mx-auto mb-4">
@@ -144,18 +121,13 @@ const Index = () => {
       <section className="py-16">
         <div className="container">
           <div className="flex items-center justify-between mb-6">
-            <SectionHeader 
-              title="Top Padel Coaches" 
-              description="Learn from the best padel instructors in the country"
-            />
+            <SectionHeader title="Top Padel Coaches" description="Learn from the best padel instructors in the country" />
             <Link to="/coaches" className="text-padel-blue hover:underline">
               View All
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredCoaches.map(coach => (
-              <CoachCard key={coach.id} coach={coach} />
-            ))}
+            {featuredCoaches.map(coach => <CoachCard key={coach.id} coach={coach} />)}
           </div>
         </div>
       </section>
@@ -164,18 +136,13 @@ const Index = () => {
       <section className="py-16 bg-padel-gray">
         <div className="container">
           <div className="flex items-center justify-between mb-6">
-            <SectionHeader 
-              title="Latest Padel News" 
-              description="Stay updated with the latest in the padel community"
-            />
+            <SectionHeader title="Latest Padel News" description="Stay updated with the latest in the padel community" />
             <Link to="/news" className="text-padel-blue hover:underline">
               View All
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {latestNews.map(newsItem => (
-              <NewsCard key={newsItem.id} news={newsItem} />
-            ))}
+            {latestNews.map(newsItem => <NewsCard key={newsItem.id} news={newsItem} />)}
           </div>
         </div>
       </section>
@@ -195,8 +162,6 @@ const Index = () => {
           </Button>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Index;
