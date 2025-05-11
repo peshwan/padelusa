@@ -1,10 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 const Footer = () => {
-  return (
-    <footer className="bg-white border-t py-8 mt-12">
+  return <footer className="bg-white border-t py-8 mt-12">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -38,7 +35,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Facebook</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Instagram</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Twitter</a></li>
+              
               <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Contact Us</a></li>
             </ul>
           </div>
@@ -54,8 +51,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
