@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/section-header';
 import CourtCard from '@/components/courts/CourtCard';
-import { courts } from '@/data/courts';
+import { courts as initialCourts } from '@/data/courts';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
+import { Court } from '@/types';
+import CourtImporter from '@/components/courts/CourtImporter';
 import {
   Select,
   SelectContent,
@@ -18,7 +20,7 @@ import {
 const Courts = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [stateFilter, setStateFilter] = useState('all');
-  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [courts, setCourts] = useState(initialCourts);
 
   const filteredCourts = courts.filter(court => {
     const matchesSearch = searchQuery 
@@ -29,16 +31,16 @@ const Courts = () => {
       ? court.state === stateFilter 
       : true;
 
-    const matchesCategory = categoryFilter !== 'all'
-      ? court.categoryName === categoryFilter
-      : true;
-
-    return matchesSearch && matchesState && matchesCategory;
+    return matchesSearch && matchesState;
   });
 
-  // Extract unique states and categories for filters
+  // Extract unique states for filters
   const states = [...new Set(courts.map(court => court.state))];
-  const categories = [...new Set(courts.map(court => court.categoryName))];
+
+  const handleImportCourts = (importedCourts: Court[]) => {
+    // Replace current courts with imported ones or append them
+    setCourts(importedCourts);
+  };
 
   return (
     <Layout>
@@ -65,9 +67,10 @@ const Courts = () => {
                 <Filter size={18} />
                 <span>Filter</span>
               </Button>
+              <CourtImporter onImport={handleImportCourts} />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div className="mt-4">
               <div>
                 <label className="text-sm text-muted-foreground mb-2 block">Filter by State</label>
                 <Select value={stateFilter} onValueChange={setStateFilter}>
@@ -78,20 +81,6 @@ const Courts = () => {
                     <SelectItem value="all">All States</SelectItem>
                     {states.map(state => (
                       <SelectItem key={state} value={state}>{state}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="text-sm text-muted-foreground mb-2 block">Filter by Type</label>
-                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    {categories.map(category => (
-                      <SelectItem key={category} value={category}>{category}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
