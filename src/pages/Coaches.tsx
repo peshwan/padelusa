@@ -2,18 +2,12 @@ import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Button } from '@/components/ui/button';
-
 const Coaches = () => {
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero */}
       <section className="bg-padel-gray py-12">
         <div className="container">
-          <SectionHeader 
-            title="Find a Padel Coach" 
-            description="Learn from experienced instructors and improve your game"
-            centered
-          />
+          <SectionHeader title="Find a Padel Coach" description="Learn from experienced instructors and improve your game" centered />
         </div>
       </section>
 
@@ -27,9 +21,8 @@ const Coaches = () => {
           </p>
           <div className="bg-padel-gray/30 p-8 rounded-lg border border-padel-gray/50 mb-8">
             <h3 className="text-xl font-semibold mb-4">Be the First to Know</h3>
-            <p className="mb-4">
-              We'll notify you when our coach directory launches. Stay tuned for expert instruction and training opportunities.
-            </p>
+            <p className="mb-4">We'll notify you when our coach directory launches. Stay tuned for expert instruction and training opportunities. 
+contact@padelcourtnearby.info</p>
           </div>
         </div>
       </section>
@@ -46,8 +39,6 @@ const Coaches = () => {
           </Button>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Coaches;
