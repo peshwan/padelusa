@@ -57,29 +57,17 @@ const CourtCard: React.FC<CourtCardProps> = ({ court }) => {
         <p className="text-xs text-muted-foreground">
           {court.openingHours.monday?.split(' - ')[0]} - {court.openingHours.monday?.split(' - ')[1]}
         </p>
-        <div className="flex gap-2">
-          <Button 
-            size="sm" 
-            variant="outline" 
-            className="text-sm flex items-center gap-1"
-            asChild
-          >
-            <a href={court.locationUrl} target="_blank" rel="noopener noreferrer">
-              <Navigation size={14} />
-              Show on Map
-            </a>
-          </Button>
-          <Button 
-            size="sm" 
-            variant="default" 
-            className="text-sm"
-            asChild
-          >
-            <Link to={`/courts/${court.id}`}>
-              View Details
-            </Link>
-          </Button>
-        </div>
+        <Button 
+          size="sm" 
+          variant="outline" 
+          className="text-sm flex items-center gap-1"
+          asChild
+        >
+          <a href={court.locationUrl} target="_blank" rel="noopener noreferrer">
+            <Navigation size={14} />
+            Show on Map
+          </a>
+        </Button>
       </CardFooter>
     </Card>
   );
