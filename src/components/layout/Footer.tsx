@@ -1,5 +1,8 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Instagram, Mail } from 'lucide-react';
+
 const Footer = () => {
   return <footer className="bg-white border-t py-8 mt-12">
       <div className="container">
@@ -21,14 +24,29 @@ const Footer = () => {
             </ul>
           </div>
 
-          
-
           <div>
             <h4 className="font-semibold mb-4">Connect</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Facebook</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Instagram</a></li>
-              
+              <li>
+                <a 
+                  href="https://instagram.com" 
+                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Instagram size={18} />
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="mailto:contact@padelcourtnearby.info" 
+                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                >
+                  <Mail size={18} />
+                  contact@padelcourtnearby.info
+                </a>
+              </li>
               <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Contact Us</a></li>
             </ul>
           </div>

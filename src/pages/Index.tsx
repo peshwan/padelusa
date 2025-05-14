@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
@@ -6,10 +7,8 @@ import { Input } from '@/components/ui/input';
 import { SectionHeader } from '@/components/ui/section-header';
 import { MapPin, Navigation, Search } from 'lucide-react';
 import CourtCard from '@/components/courts/CourtCard';
-import CoachCard from '@/components/coaches/CoachCard';
 import NewsCard from '@/components/news/NewsCard';
 import { courts } from '@/data/courts';
-import { coaches } from '@/data/coaches';
 import { news } from '@/data/news';
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,7 +18,6 @@ const Index = () => {
     console.log('Search query:', searchQuery);
   };
   const featuredCourts = courts.slice(0, 3);
-  const featuredCoaches = coaches.slice(0, 3);
   const latestNews = news.slice(0, 3);
   return <Layout>
       {/* Hero Section */}
@@ -76,22 +74,6 @@ const Index = () => {
       </section>
 
       {/* Why Padel */}
-      
-
-      {/* Featured Coaches */}
-      <section className="py-16">
-        <div className="container">
-          <div className="flex items-center justify-between mb-6">
-            <SectionHeader title="Top Padel Coaches" description="Learn from the best padel instructors in the country" />
-            <Link to="/coaches" className="text-padel-blue hover:underline">
-              View All
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredCoaches.map(coach => <CoachCard key={coach.id} coach={coach} />)}
-          </div>
-        </div>
-      </section>
 
       {/* Latest News */}
       <section className="py-16 bg-padel-gray">
