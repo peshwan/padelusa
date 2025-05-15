@@ -27,7 +27,7 @@ export const parseCourtsFromCSV = (csvString: string): Court[] => {
       if (!lines[i].trim()) continue;
       
       const values = lines[i].split(',').map(value => value.trim());
-      const court: Partial<Court> = {};
+      const court: Record<string, any> = {};
       
       // Map CSV values to Court properties
       headers.forEach((header, index) => {
@@ -37,21 +37,21 @@ export const parseCourtsFromCSV = (csvString: string): Court[] => {
         if (header.startsWith('openingHours.')) {
           const day = header.split('.')[1];
           if (!court.openingHours) court.openingHours = {};
-          court.openingHours[day as keyof typeof court.openingHours] = value;
+          court.openingHours[day] = value;
         } 
         // Handle numeric values
         else if (['reviewsCount', 'totalScore', 'latitude', 'longitude'].includes(header)) {
-          court[header as keyof Court] = parseFloat(value) as any;
+          court[header] = parseFloat(value);
         }
         // Handle all other string values
         else {
-          court[header as keyof Court] = value as any;
+          court[header] = value;
         }
       });
       
-      // Ensure all required fields are present
+      // Ensure all required fields are present and cast to Court type
       if (court.id && court.title) {
-        courts.push(court as Court);
+        courts.push(court as unknown as Court);
       }
     }
     
@@ -73,4 +73,3 @@ export const parseCourtsFromCSV = (csvString: string): Court[] => {
  * id,title,address,street,city,state,postalCode,countryCode,neighborhood,imageUrl,phone,reviewsCount,totalScore,categoryName,website,locationUrl,searchString,openingHours.monday,openingHours.tuesday,openingHours.wednesday,openingHours.thursday,openingHours.friday,openingHours.saturday,openingHours.sunday
  * 1,Padel Club Miami,123 Ocean Drive,123 Ocean Drive,Miami,FL,33139,US,South Beach,https://example.com/image1.jpg,(305) 555-1234,42,4.8,Indoor Courts,https://padelclubmiami.com,https://maps.google.com/?q=123+Ocean+Drive,Miami,FL,padel club miami south beach indoor courts florida,8:00 AM - 10:00 PM,8:00 AM - 10:00 PM,8:00 AM - 10:00 PM,8:00 AM - 10:00 PM,8:00 AM - 11:00 PM,9:00 AM - 11:00 PM,9:00 AM - 8:00 PM
  */
-
