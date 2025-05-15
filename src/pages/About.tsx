@@ -1,9 +1,9 @@
-
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import FaqSection from '@/components/about/FaqSection';
 
 const About = () => {
   return (
@@ -176,6 +176,9 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FaqSection />
 
       {/* CTA */}
       <section className="py-16">
