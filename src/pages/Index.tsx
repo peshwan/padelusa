@@ -7,9 +7,9 @@ import { Input } from '@/components/ui/input';
 import { SectionHeader } from '@/components/ui/section-header';
 import { MapPin, Navigation, Search } from 'lucide-react';
 import CourtCard from '@/components/courts/CourtCard';
-import NewsCard from '@/components/news/NewsCard';
 import { courts } from '@/data/courts';
-import { news } from '@/data/news';
+import FaqSection from '@/components/about/FaqSection';
+
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -18,7 +18,7 @@ const Index = () => {
     console.log('Search query:', searchQuery);
   };
   const featuredCourts = courts.slice(0, 3);
-  const latestNews = news.slice(0, 3);
+  
   return <Layout>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-padel-blue to-padel-green py-16 md:py-24 text-white">
@@ -75,21 +75,6 @@ const Index = () => {
 
       {/* Why Padel */}
 
-      {/* Latest News */}
-      <section className="py-16 bg-padel-gray">
-        <div className="container">
-          <div className="flex items-center justify-between mb-6">
-            <SectionHeader title="Latest Padel News" description="Stay updated with the latest in the padel community" />
-            <Link to="/news" className="text-padel-blue hover:underline">
-              View All
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {latestNews.map(newsItem => <NewsCard key={newsItem.id} news={newsItem} />)}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="py-16 bg-padel-blue text-white">
         <div className="container text-center">
@@ -105,6 +90,9 @@ const Index = () => {
           </Button>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FaqSection />
     </Layout>;
 };
 export default Index;
