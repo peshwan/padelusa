@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
 import { Court } from '@/types';
-import CourtImporter from '@/components/courts/CourtImporter';
 import {
   Select,
   SelectContent,
@@ -21,25 +20,48 @@ const Courts = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [stateFilter, setStateFilter] = useState('all');
   const [courts, setCourts] = useState(initialCourts);
-
-  const filteredCourts = courts.filter(court => {
-    const matchesSearch = searchQuery 
-      ? court.searchString.toLowerCase().includes(searchQuery.toLowerCase())
-      : true;
-    
-    const matchesState = stateFilter !== 'all' 
-      ? court.state === stateFilter 
-      : true;
-
-    return matchesSearch && matchesState;
-  });
+  const [filteredCourts, setFilteredCourts] = useState(initialCourts);
 
   // Extract unique states for filters
   const states = [...new Set(courts.map(court => court.state))];
 
-  const handleImportCourts = (importedCourts: Court[]) => {
-    // Replace current courts with imported ones or append them
-    setCourts(importedCourts);
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Filter courts based on search query and state filter
+    const filtered = courts.filter(court => {
+      const matchesSearch = searchQuery 
+        ? court.searchString.toLowerCase().includes(searchQuery.toLowerCase())
+        : true;
+      
+      const matchesState = stateFilter !== 'all' 
+        ? court.state === stateFilter 
+        : true;
+
+      return matchesSearch && matchesState;
+    });
+
+    setFilteredCourts(filtered);
+  };
+
+  // Handle state filter change
+  const handleStateChange = (value: string) => {
+    setStateFilter(value);
+    
+    // Apply filters immediately when state changes
+    const filtered = courts.filter(court => {
+      const matchesSearch = searchQuery 
+        ? court.searchString.toLowerCase().includes(searchQuery.toLowerCase())
+        : true;
+      
+      const matchesState = value !== 'all' 
+        ? court.state === value 
+        : true;
+
+      return matchesSearch && matchesState;
+    });
+
+    setFilteredCourts(filtered);
   };
 
   return (
@@ -53,7 +75,7 @@ const Courts = () => {
             centered
           />
           <div className="max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4">
+            <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-4">
               <div className="flex-grow relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                 <Input
@@ -63,17 +85,16 @@ const Courts = () => {
                   className="pl-10"
                 />
               </div>
-              <Button className="gap-2">
-                <Filter size={18} />
-                <span>Filter</span>
+              <Button type="submit" className="gap-2">
+                <Search size={18} />
+                <span>Search</span>
               </Button>
-              <CourtImporter onImport={handleImportCourts} />
-            </div>
+            </form>
 
             <div className="mt-4">
               <div>
                 <label className="text-sm text-muted-foreground mb-2 block">Filter by State</label>
-                <Select value={stateFilter} onValueChange={setStateFilter}>
+                <Select value={stateFilter} onValueChange={handleStateChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a state" />
                   </SelectTrigger>

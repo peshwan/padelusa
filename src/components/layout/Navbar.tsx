@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { MapPin, Navigation } from 'lucide-react';
+import { MapPin, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
 const Navbar = () => {
   const navItems = [{
     title: 'Home',
@@ -17,6 +19,7 @@ const Navbar = () => {
     title: 'About Padel',
     path: '/about'
   }];
+
   return <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
       <nav className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
@@ -34,10 +37,16 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm" className="hidden sm:flex gap-1">
-            
+            <Link to="/courts">
+              <Search size={16} />
+              <span>Find Courts</span>
+            </Link>
           </Button>
           <Button asChild size="sm" className="gap-1">
-            
+            <Link to="/courts/near-me">
+              <MapPin size={16} />
+              <span>Near Me</span>
+            </Link>
           </Button>
           <Button variant="ghost" size="sm" className="md:hidden">
             <span className="sr-only">Toggle menu</span>
@@ -49,4 +58,5 @@ const Navbar = () => {
       </nav>
     </header>;
 };
+
 export default Navbar;

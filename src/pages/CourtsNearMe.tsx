@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Button } from '@/components/ui/button';
-import { MapPin, Navigation, Loader2 } from 'lucide-react';
+import { MapPin, Loader2 } from 'lucide-react';
 import CourtCard from '@/components/courts/CourtCard';
 import { courts } from '@/data/courts';
 import { Court } from '@/types';
@@ -21,11 +21,16 @@ const CourtsNearMe = () => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log("Position obtained:", position.coords);
           setUserLocation({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           });
           setIsLoading(false);
+          toast({
+            title: "Location found",
+            description: "Finding courts near your location..."
+          });
         },
         (error) => {
           setIsLoading(false);
@@ -35,7 +40,8 @@ const CourtsNearMe = () => {
             description: "Please allow location access to find nearby courts."
           });
           console.error("Error getting location:", error);
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
       setIsLoading(false);
@@ -49,6 +55,8 @@ const CourtsNearMe = () => {
 
   // Calculate distance between two coordinates (in miles)
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    if (!lat1 || !lon1 || !lat2 || !lon2) return Infinity;
+    
     const R = 3958.8; // Earth's radius in miles
     const dLat = (lat2 - lat1) * Math.PI / 180;  
     const dLon = (lon2 - lon1) * Math.PI / 180;  
@@ -62,9 +70,10 @@ const CourtsNearMe = () => {
 
   useEffect(() => {
     if (userLocation) {
+      console.log("Finding courts near", userLocation);
+      
       // Filter and sort courts by distance
       const courtsWithDistance = courts
-        .filter(court => court.latitude && court.longitude)
         .map(court => {
           const distance = calculateDistance(
             userLocation.latitude,
@@ -74,9 +83,11 @@ const CourtsNearMe = () => {
           );
           return { ...court, distance };
         })
-        .sort((a, b) => (a.distance || 0) - (b.distance || 0))
+        .filter(court => court.distance !== Infinity)  // Filter out courts without valid coordinates
+        .sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity))
         .slice(0, 6); // Get the 6 closest courts
 
+      console.log("Found courts:", courtsWithDistance);
       setNearbyCourts(courtsWithDistance);
     }
   }, [userLocation]);
