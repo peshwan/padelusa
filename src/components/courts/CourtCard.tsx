@@ -32,7 +32,7 @@ const CourtCard: React.FC<CourtCardProps> = ({ court }) => {
         </Link>
         <p className="text-sm text-muted-foreground flex items-center gap-1 mb-1">
           <MapPin size={14} />
-          <span>{court.street}, {court.neighborhood}</span>
+          <span>{court.street}{court.neighborhood ? `, ${court.neighborhood}` : ''}</span>
         </p>
         <p className="text-sm text-muted-foreground flex items-center gap-1 mb-2">
           <span className="ml-4">{court.city}, {court.state} {court.postalCode}</span>
@@ -42,10 +42,12 @@ const CourtCard: React.FC<CourtCardProps> = ({ court }) => {
           <span className="font-medium">{court.totalScore}</span>
           <span className="text-muted-foreground text-sm">({court.reviewsCount} reviews)</span>
         </div>
-        <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
-          <Phone size={12} />
-          <span>{court.phone}</span>
-        </div>
+        {court.phone && (
+          <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
+            <Phone size={12} />
+            <span>{court.phone}</span>
+          </div>
+        )}
         <div className="text-xs text-muted-foreground flex items-center gap-1">
           <Globe size={12} />
           <a href={court.website} target="_blank" rel="noopener noreferrer" className="hover:text-padel-blue">
