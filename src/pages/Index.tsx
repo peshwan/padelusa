@@ -70,6 +70,12 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredCourts.map(court => <CourtCard key={court.id} court={court} />)}
           </div>
+          
+          <div className="mt-8 text-center">
+            <Link to="/court-import" className="text-padel-blue hover:underline text-sm">
+              Admin: Import Court Data
+            </Link>
+          </div>
         </div>
       </section>
 

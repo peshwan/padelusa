@@ -14,6 +14,7 @@ import Coaches from "./pages/Coaches";
 import CoachDetail from "./pages/CoachDetail";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import CourtImport from "./pages/CourtImport";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/coaches" element={<Coaches />} />
           <Route path="/coaches/:id" element={<CoachDetail />} />
           <Route path="/about" element={<About />} />
+          <Route path="/court-import" element={<CourtImport />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
