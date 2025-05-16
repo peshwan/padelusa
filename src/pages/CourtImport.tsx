@@ -61,7 +61,7 @@ const CourtImport = () => {
           
           if (header === 'reviewsCount' || header === 'totalScore') {
             // Convert numeric values to numbers
-            court[header as keyof Court] = parseFloat(value) || 0 as any;
+            (court as any)[header] = parseFloat(value) || 0;
           } else if (header === 'openingHours') {
             // Parse opening hours as an object
             try {
@@ -72,8 +72,8 @@ const CourtImport = () => {
               court.openingHours = { monday: value };
             }
           } else if (expectedHeaders.includes(header)) {
-            // For string values, assign directly with proper type casting
-            court[header as keyof Court] = value as any;
+            // For string values, assign directly with type assertion
+            (court as any)[header] = value;
           }
         });
         
