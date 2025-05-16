@@ -6,7 +6,7 @@ import CourtCard from '@/components/courts/CourtCard';
 import { courts as initialCourts } from '@/data/courts';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Court } from '@/types';
 import {
   Select,
@@ -22,8 +22,29 @@ const Courts = () => {
   const [courts, setCourts] = useState(initialCourts);
   const [filteredCourts, setFilteredCourts] = useState(initialCourts);
 
-  // Extract unique states for filters
-  const states = [...new Set(courts.map(court => court.state))];
+  // Predefined list of states for the filter
+  const states = [
+    "Pennsylvania",
+    "Nevada",
+    "Florida",
+    "North Carolina",
+    "New York",
+    "California",
+    "New Mexico",
+    "Massachusetts",
+    "Texas",
+    "Arizona",
+    "Virginia",
+    "Georgia",
+    "Kansas",
+    "New Jersey",
+    "Colorado",
+    "Illinois",
+    "Missouri",
+    "Michigan",
+    "Arkansas",
+    "Connecticut"
+  ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
