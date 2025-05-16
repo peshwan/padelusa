@@ -50,6 +50,7 @@ const CourtImport = () => {
           throw new Error(`Line has ${values.length} values but there are ${headers.length} headers`);
         }
         
+        // Create a court object with required default values
         const court: Partial<Court> = {
           id: uuidv4(), // Generate a unique ID
           searchString: '', // Will be set later
@@ -59,22 +60,27 @@ const CourtImport = () => {
           const value = values[index];
           
           if (header === 'reviewsCount' || header === 'totalScore') {
-            court[header as keyof Court] = parseFloat(value) as any;
+            // Convert numeric values to numbers
+            court[header as keyof Court] = parseFloat(value) || 0 as any;
           } else if (header === 'openingHours') {
             // Parse opening hours as an object
             try {
-              court[header as keyof Court] = JSON.parse(value) as any;
+              const parsedObj = JSON.parse(value);
+              court.openingHours = parsedObj;
             } catch (e) {
               // Default format if not JSON
-              court[header as keyof Court] = { monday: value } as any;
+              court.openingHours = { monday: value };
             }
           } else {
-            court[header as keyof Court] = value as any;
+            // For string values, assign directly with proper type casting
+            if (header in expectedHeaders) {
+              court[header as keyof Court] = value as any;
+            }
           }
         });
         
         // Generate searchString for filtering
-        court.searchString = `${court.title} ${court.city} ${court.state} ${court.neighborhood} ${court.categoryName}`.toLowerCase();
+        court.searchString = `${court.title || ''} ${court.city || ''} ${court.state || ''} ${court.neighborhood || ''} ${court.categoryName || ''}`.toLowerCase();
         
         // Split address into street if not provided
         if (!court.street && court.address) {
