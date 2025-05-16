@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Court } from '@/types';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
@@ -71,11 +71,9 @@ const CourtImport = () => {
               // Default format if not JSON
               court.openingHours = { monday: value };
             }
-          } else {
+          } else if (expectedHeaders.includes(header)) {
             // For string values, assign directly with proper type casting
-            if (header in expectedHeaders) {
-              court[header as keyof Court] = value as any;
-            }
+            court[header as keyof Court] = value as any;
           }
         });
         
