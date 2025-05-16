@@ -75,22 +75,6 @@ const Index = () => {
 
       {/* Why Padel */}
 
-      {/* CTA */}
-      <section className="py-16 bg-padel-blue text-white">
-        <div className="container text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Find a Court?</h2>
-          <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-            Use our location-based search to find padel courts near you and start playing today!
-          </p>
-          <Button asChild size="lg" className="bg-white text-padel-blue hover:bg-white/90 gap-2">
-            <Link to="/courts/near-me">
-              <MapPin size={18} />
-              Find Courts Near Me
-            </Link>
-          </Button>
-        </div>
-      </section>
-
       {/* FAQ Section */}
       <FaqSection />
     </Layout>;
