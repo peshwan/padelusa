@@ -9,7 +9,7 @@ import { Court } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { InfoIcon } from 'lucide-react';
+import { InfoIcon, Download } from 'lucide-react';
 
 const CourtImport = () => {
   const [inputData, setInputData] = useState('');
@@ -117,6 +117,18 @@ const CourtImport = () => {
     });
   };
 
+  const loadSampleData = () => {
+    const sampleData = 
+`address\tcategoryName\tlocationUrl\tcity\tcountryCode\timageUrl\tneighborhood\topeningHours\tphone\tpostalCode\treviewsCount\tstate\ttitle\ttotalScore\twebsite
+601 Righters Ferry Rd, Bala Cynwyd, PA 19004\tGym\thttps://www.google.com/maps/search/?api=1&query=PADELphia&query_place_id=ChIJGzsDBFu5xokRx3GKpl3EC-I\tBala Cynwyd\tUS\thttps://lh3.googleusercontent.com/p/AF1QipP-gUdPgKqRWH8SGZjiKaAVcAefnHlTEHd4623P=w408-h306-k-no\t\t8 AM to 8 PM\t\t19004\t16\tPennsylvania\tPADELphia\t4.7\thttp://www.padelphia.com/`;
+    
+    setInputData(sampleData);
+    toast({
+      title: "Sample data loaded",
+      description: "Sample court data has been loaded. Click 'Parse Data' to process it.",
+    });
+  };
+
   return (
     <Layout>
       <div className="container py-8">
@@ -145,7 +157,7 @@ const CourtImport = () => {
             />
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
             <Button onClick={parseCourtData}>Parse Data</Button>
             <Button 
               variant="outline" 
@@ -153,6 +165,14 @@ const CourtImport = () => {
               disabled={parsedCourts.length === 0}
             >
               Copy as Courts Array
+            </Button>
+            <Button 
+              variant="secondary"
+              onClick={loadSampleData}
+              className="flex items-center gap-2"
+            >
+              <Download size={16} />
+              Load Sample Data
             </Button>
           </div>
 
