@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Accordion,
@@ -7,6 +6,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const faqData = {
   aboutPadel: [
@@ -95,7 +97,20 @@ const faqData = {
   ]
 };
 
+const categoryLabels = {
+  aboutPadel: "About Padel",
+  courtInformation: "Court Information",
+  playingPadel: "Playing Padel",
+  equipmentGear: "Equipment & Gear",
+  gettingStarted: "Getting Started",
+  aboutDirectory: "About The Directory"
+};
+
 const FaqSection = () => {
+  const isMobile = useIsMobile();
+  const [activeCategory, setActiveCategory] = React.useState('aboutPadel');
+  const [isOpen, setIsOpen] = React.useState(false);
+  
   return (
     <section className="py-12 bg-stone-50">
       <div className="container">
@@ -106,50 +121,44 @@ const FaqSection = () => {
           </p>
         </div>
         
-        <Tabs defaultValue="aboutPadel" className="max-w-4xl mx-auto">
-          <TabsList className="w-full flex flex-wrap justify-between bg-transparent mb-6">
-            <TabsTrigger 
-              value="aboutPadel" 
-              className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md"
+        {isMobile ? (
+          <div className="max-w-4xl mx-auto">
+            <Collapsible 
+              open={isOpen} 
+              onOpenChange={setIsOpen}
+              className="mb-6 bg-white rounded-lg border shadow-sm"
             >
-              About Padel
-            </TabsTrigger>
-            <TabsTrigger 
-              value="courtInformation"
-              className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
-            >
-              Court Information
-            </TabsTrigger>
-            <TabsTrigger 
-              value="playingPadel"
-              className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
-            >
-              Playing Padel
-            </TabsTrigger>
-            <TabsTrigger 
-              value="equipmentGear"
-              className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
-            >
-              Equipment & Gear
-            </TabsTrigger>
-            <TabsTrigger 
-              value="gettingStarted"
-              className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
-            >
-              Getting Started
-            </TabsTrigger>
-            <TabsTrigger 
-              value="aboutDirectory"
-              className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
-            >
-              About The Directory
-            </TabsTrigger>
-          </TabsList>
-          
-          {Object.entries(faqData).map(([category, questions]) => (
-            <TabsContent key={category} value={category} className="border rounded-lg p-6 bg-white">
+              <CollapsibleTrigger className="w-full p-4 flex justify-between items-center">
+                <span className="font-medium text-lg">{categoryLabels[activeCategory as keyof typeof categoryLabels]}</span>
+                <ChevronDown 
+                  className={`h-5 w-5 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} 
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4 border-t">
+                <div className="grid grid-cols-1 gap-2">
+                  {Object.entries(categoryLabels).map(([key, label]) => (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        setActiveCategory(key);
+                        setIsOpen(false);
+                      }}
+                      className={`text-left p-2 rounded-md ${
+                        key === activeCategory
+                          ? 'bg-padel-blue text-white'
+                          : 'hover:bg-muted'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+            
+            <div className="border rounded-lg p-6 bg-white">
               <Accordion type="single" collapsible className="w-full">
-                {questions.map((faq, index) => (
+                {faqData[activeCategory as keyof typeof faqData].map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`} className="border-b">
                     <AccordionTrigger className="text-lg font-medium">
                       {faq.question}
@@ -160,9 +169,67 @@ const FaqSection = () => {
                   </AccordionItem>
                 ))}
               </Accordion>
-            </TabsContent>
-          ))}
-        </Tabs>
+            </div>
+          </div>
+        ) : (
+          <Tabs defaultValue="aboutPadel" className="max-w-4xl mx-auto">
+            <TabsList className="w-full flex flex-wrap justify-between bg-transparent mb-6">
+              <TabsTrigger 
+                value="aboutPadel" 
+                className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md"
+              >
+                About Padel
+              </TabsTrigger>
+              <TabsTrigger 
+                value="courtInformation"
+                className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
+              >
+                Court Information
+              </TabsTrigger>
+              <TabsTrigger 
+                value="playingPadel"
+                className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
+              >
+                Playing Padel
+              </TabsTrigger>
+              <TabsTrigger 
+                value="equipmentGear"
+                className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
+              >
+                Equipment & Gear
+              </TabsTrigger>
+              <TabsTrigger 
+                value="gettingStarted"
+                className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
+              >
+                Getting Started
+              </TabsTrigger>
+              <TabsTrigger 
+                value="aboutDirectory"
+                className="data-[state=active]:bg-padel-blue data-[state=active]:text-white px-4 py-2 rounded-md" 
+              >
+                About The Directory
+              </TabsTrigger>
+            </TabsList>
+            
+            {Object.entries(faqData).map(([category, questions]) => (
+              <TabsContent key={category} value={category} className="border rounded-lg p-6 bg-white">
+                <Accordion type="single" collapsible className="w-full">
+                  {questions.map((faq, index) => (
+                    <AccordionItem key={index} value={`item-${index}`} className="border-b">
+                      <AccordionTrigger className="text-lg font-medium">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">{faq.answer}</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </TabsContent>
+            ))}
+          </Tabs>
+        )}
       </div>
     </section>
   );
